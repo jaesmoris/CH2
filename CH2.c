@@ -139,7 +139,7 @@ void PrefixSum ( unsigned short Freq[], short ValMax )
 }
 
 
-void PrintPrefix ( unsigned shortFreq[], short ValMax )
+void PrintPrefix ( unsigned short Freq[], short ValMax )
 {
   for (int i=0; i<ValMax; i++)
     printf("%4d:%5d ", i, Freq[i]);
