@@ -10,7 +10,7 @@ unsigned int myRandom() {
   return (seed>>13);
 }
 
-void GenerateBOARD ( unsigned short BOARD[], int DIM, unsigned short MAX_VAL )
+void GenerateBOARD ( unsigned short BOARD[], short DIM, unsigned short MAX_VAL )
 {
   // Generation of random values is different from CH1: this version is not really equivalent
 
@@ -24,7 +24,7 @@ void GenerateBOARD ( unsigned short BOARD[], int DIM, unsigned short MAX_VAL )
 }
 
 
-void CopyBOARD ( unsigned short IN[], unsigned short OUT[], int D )
+void CopyBOARD ( unsigned short IN[], unsigned short OUT[], short D )
 {
   for (int y=1; y<D-1; y++)
     for (int x=1; x<D-1; x++)
@@ -62,7 +62,7 @@ void __attribute__ ((noinline))
 }
 
 
-void PrintBOARD ( unsigned short BOARD[], int D )
+void PrintBOARD ( unsigned short BOARD[], short D )
 {
   for (int x=0; x<D; x++) {
     for (int y=0; y<D; y++)
@@ -110,7 +110,7 @@ void CopyBoundary ( unsigned short IN[], unsigned short OUT[], int D )
 
 
 void __attribute__ ((noinline)) 
-  FillHistogram ( unsigned short BOARD[], unsigned Freq[], unsigned LocalId[], int D, int ValMax )
+  FillHistogram ( unsigned short BOARD[], unsigned short Freq[], unsigned short LocalId[], short D, short ValMax )
 {
   // clear histogram
   for (int i=0; i<ValMax; i++)
@@ -119,16 +119,16 @@ void __attribute__ ((noinline))
   for (int x=0; x<D; x++)
     for (int y=0; y<D; y++)
     {
-      unsigned short V = BOARD[x+D*y];
-      unsigned Id      = Freq[V];
+      unsigned short V  = BOARD[x+D*y];
+      unsigned short Id = Freq[V];
       Freq[V]          = Id+1;
       LocalId[x+y*D]   = Id;
     }
 }
 
-void PrefixSum ( unsigned Freq[], int ValMax )
+void PrefixSum ( unsigned short Freq[], short ValMax )
 {
-  unsigned V = Freq[0], Sum = 0;
+  unsigned short V = Freq[0], Sum = 0;
   Freq[0] = Sum;
   for (int i=1; i<ValMax; i++)
   {
@@ -139,7 +139,7 @@ void PrefixSum ( unsigned Freq[], int ValMax )
 }
 
 
-void PrintPrefix ( unsigned Freq[], int ValMax )
+void PrintPrefix ( unsigned shortFreq[], short ValMax )
 {
   for (int i=0; i<ValMax; i++)
     printf("%4d:%5d ", i, Freq[i]);
@@ -147,9 +147,9 @@ void PrintPrefix ( unsigned Freq[], int ValMax )
 }
 
 
-unsigned BinSearch( unsigned Vector[], int N, unsigned target )
+unsigned BinSearch( unsigned short Vector[], short N, unsigned short target )
 {
-  unsigned M, L= 0, R= N;
+  unsigned short M, L= 0, R= N;
   M = (R - L)/2;
   do {
      M = M + L; 
@@ -162,12 +162,12 @@ unsigned BinSearch( unsigned Vector[], int N, unsigned target )
 
 
 void __attribute__ ((noinline)) 
-  UpdateReversed ( unsigned short BOARD[], unsigned Freq[], unsigned LocalId[], int D, int ValMax )
+  UpdateReversed ( unsigned short BOARD[], unsigned short Freq[], unsigned short LocalId[], short D, short ValMax )
 {
   for (int xy=0; xy<D*D; xy++)
   {
     unsigned short V = BOARD[xy];
-    unsigned pos     = Freq[V]+LocalId[xy];
+    unsigned short pos     = Freq[V]+LocalId[xy];
     BOARD[xy]        = BinSearch( Freq, ValMax, D*D-pos)-1;
   }
 }
@@ -175,7 +175,7 @@ void __attribute__ ((noinline))
 
 int main (int argc, char **argv)
 {
-  int N=10, D=4002, Iter=50, MAX= 9999;
+  short N=10, D=4002, Iter=50, MAX= 9999;
   seed = 12345;
 
   // obtain parameters at run time
@@ -186,12 +186,12 @@ int main (int argc, char **argv)
   printf("Challenge #2: DIM= %d, N= %d, Iter= %d\n", D, N, Iter);
 
   unsigned short *BOARD, *TMP;
-  unsigned       *Freq, *LocID;
+  unsigned short *Freq, *LocID;
 
   BOARD= (unsigned short *) malloc( D*D* sizeof(unsigned short) );
   TMP  = (unsigned short *) malloc( D*D* sizeof(unsigned short) );
-  Freq = (unsigned *)       malloc( MAX* sizeof(unsigned) );
-  LocID= (unsigned *)       malloc( D*D* sizeof(unsigned) );
+  Freq = (unsigned short *)       malloc( MAX* sizeof(unsigned short) );
+  LocID= (unsigned short *)       malloc( D*D* sizeof(unsigned short) );
 
   GenerateBOARD ( BOARD, D, MAX );
 
