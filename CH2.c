@@ -10,7 +10,7 @@ unsigned int myRandom() {
   return (seed>>13);
 }
 
-void GenerateBOARD ( short BOARD[], int DIM, unsigned short MAX_VAL )
+void GenerateBOARD ( short BOARD[], int DIM, short MAX_VAL )
 {
   // Generation of random values is different from CH1: this version is not really equivalent
 
@@ -24,7 +24,7 @@ void GenerateBOARD ( short BOARD[], int DIM, unsigned short MAX_VAL )
 }
 
 
-void CopyBOARD ( unsigned short IN[], unsigned short OUT[], int D )
+void CopyBOARD ( short IN[], short OUT[], int D )
 {
   for (int y=1; y<D-1; y++)
     for (int x=1; x<D-1; x++)
@@ -33,7 +33,7 @@ void CopyBOARD ( unsigned short IN[], unsigned short OUT[], int D )
 
 
 void __attribute__ ((noinline)) 
-  UpdateBOARD ( unsigned short IN[], unsigned short OUT[], int D, unsigned short MAX_VAL )
+  UpdateBOARD ( short IN[], short OUT[], int D, short MAX_VAL )
 {
   short max1, max2, min1, min2, a, b, c, d, v;
   for (int y=1; y<D-1; y++)
@@ -91,7 +91,7 @@ void PrintCHECK (  short BOARD[], int D )
 }
 
 
-void CopyBoundary ( unsigned short IN[], unsigned short OUT[], int D )
+void CopyBoundary ( short IN[], short OUT[], int D )
 {
   // Up and Down Horizontal Boundaries
   for (int x=0; x<D; x++)
@@ -119,7 +119,7 @@ void __attribute__ ((noinline))
   for (int x=0; x<D; x++)
     for (int y=0; y<D; y++)
     {
-      unsigned short V = BOARD[x+D*y];
+      short V = BOARD[x+D*y];
       unsigned Id      = Freq[V];
       Freq[V]          = Id+1;
       LocalId[x+y*D]   = Id;
@@ -166,7 +166,7 @@ void __attribute__ ((noinline))
 {
   for (int xy=0; xy<D*D; xy++)
   {
-    unsigned short V = BOARD[xy];
+    short V = BOARD[xy];
     unsigned pos     = Freq[V]+LocalId[xy];
     BOARD[xy]        = BinSearch( Freq, ValMax, D*D-pos)-1;
   }
@@ -185,7 +185,7 @@ int main (int argc, char **argv)
 
   printf("Challenge #2: DIM= %d, N= %d, Iter= %d\n", D, N, Iter);
 
-  unsigned short *BOARD, *TMP;
+  short *BOARD, *TMP;
   unsigned       *Freq, *LocID;
 
   BOARD= (short *) malloc( D*D* sizeof(short) );
