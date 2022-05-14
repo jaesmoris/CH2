@@ -57,9 +57,7 @@ void __attribute__ ((noinline))
       //d    = max1>max2? max1: max2;
 
       v = b + c;
-
       v = v > MAX_VAL ? v - MAX_VAL : v;
-
      // v = (b+c) % MAX_VAL;
       OUT[x+D*y] = v;
     }
@@ -154,7 +152,8 @@ void PrintPrefix ( unsigned Freq[], int ValMax )
 unsigned BinSearch( unsigned Vector[], int N, unsigned target )
 {
   unsigned M, L= 0, R= N;
-  M = (R - L)/2;
+          //M = (R - L) / 2;
+  M = R / 2;
   do {
      M = M + L; 
      unsigned value = Vector[M];
@@ -168,11 +167,12 @@ unsigned BinSearch( unsigned Vector[], int N, unsigned target )
 void __attribute__ ((noinline)) 
   UpdateReversed (  unsigned short BOARD[], unsigned Freq[], unsigned LocalId[], int D, int ValMax )
 {
-  for (int xy=0; xy<D*D; xy++)
+    DD = D * D;
+  for (int xy=0; xy<DD; xy++)
   {
     unsigned short V = BOARD[xy];
     unsigned pos     = Freq[V]+LocalId[xy];
-    BOARD[xy]        = BinSearch( Freq, ValMax, D*D-pos)-1;
+    BOARD[xy]        = BinSearch( Freq, ValMax, DD-pos)-1;
   }
 }
 
