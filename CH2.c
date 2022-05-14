@@ -24,6 +24,7 @@ void GenerateBOARD(unsigned short BOARD[], int DIM, unsigned short MAX_VAL)
     for (int idx = 0; idx < DIM * DIM; idx++)
         BOARD[idx] = myRandom() % MAX_VAL;
 }
+/*
 
 typedef struct data_thread{
     int lower;
@@ -50,14 +51,13 @@ void CopyBOARD(unsigned short IN[], unsigned short OUT[], int D)
 }
 
 
-/*
+*/
 void CopyBOARD(unsigned short IN[], unsigned short OUT[], int D)
 {
     for (int y = 1; y < D - 1; y++)
         for (int x = 1; x < D - 1; x++)
             OUT[x + D * y] = IN[x + D * y];
 }
-*/
 
 void __attribute__((noinline))
 UpdateBOARD(unsigned short IN[], unsigned short OUT[], int D, unsigned short MAX_VAL)
