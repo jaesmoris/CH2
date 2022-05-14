@@ -50,13 +50,14 @@ void CopyBOARD(unsigned short IN[], unsigned short OUT[], int D)
 }
 
 
-
+/*
 void CopyBOARD(unsigned short IN[], unsigned short OUT[], int D)
 {
     for (int y = 1; y < D - 1; y++)
         for (int x = 1; x < D - 1; x++)
             OUT[x + D * y] = IN[x + D * y];
 }
+*/
 
 void __attribute__((noinline))
 UpdateBOARD(unsigned short IN[], unsigned short OUT[], int D, unsigned short MAX_VAL)
