@@ -56,7 +56,11 @@ void __attribute__ ((noinline))
       c    = max1>max2? max2: max1;
       //d    = max1>max2? max1: max2;
 
-      v = (b+c) % MAX_VAL;
+      v = b + c;
+
+      v = v > MAX_VAL ? v - MAX_VAL : v;
+
+     // v = (b+c) % MAX_VAL;
       OUT[x+D*y] = v;
     }
 }
