@@ -26,9 +26,11 @@ void GenerateBOARD(unsigned short BOARD[], int DIM, unsigned short MAX_VAL)
 
 void CopyBOARD(unsigned short IN[], unsigned short OUT[], int D)
 {
-    for (int y = 1; y < D - 1; y++)
+    for (int y = 1; y < D - 1; y++) {
+        int aux = D * y;
         for (int x = 1; x < D - 1; x++)
-            OUT[x + D * y] = IN[x + D * y];
+            OUT[x + aux] = IN[x + aux];
+    }
 }
 
 
@@ -36,14 +38,17 @@ void __attribute__((noinline))
 UpdateBOARD(unsigned short IN[], unsigned short OUT[], int D, unsigned short MAX_VAL)
 {
     unsigned short max1, max2, min1, min2, a, b, c, d, v;
-    for (int y = 1; y < D - 1; y++)
+    for (int y = 1; y < D - 1; y++) {
+        int aux1 = D * y;
+        int aux2 = D * (y - 1);
+        int aux3 = D * (y + 1);
         for (int x = 1; x < D - 1; x++) // access consecutive elements in inner loop
         {
             // copy values of neighbour elements
-            a = IN[x + 1 + D * y];
-            b = IN[x - 1 + D * y];
-            c = IN[x + D * (y - 1)];
-            d = IN[x + D * (y + 1)];
+            a = IN[x + 1 + aux1];
+            b = IN[x - 1 + aux1];
+            c = IN[x + aux2];
+            d = IN[x + aux3];
 
             // Sort using Sorting Network
             max1 = a > b ? a : b;
@@ -59,8 +64,9 @@ UpdateBOARD(unsigned short IN[], unsigned short OUT[], int D, unsigned short MAX
             //v = (b + c) % MAX_VAL;
             v = b + c;
             v = v >= MAX_VAL ? v - MAX_VAL : v;
-            OUT[x + D * y] = v;
+            OUT[x + aux1] = v;
         }
+    }
 }
 
 
