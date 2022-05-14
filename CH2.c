@@ -157,9 +157,8 @@ unsigned BinSearch(unsigned Vector[], int N, unsigned target)
     do {
         M = M + L;
         unsigned value = Vector[M];
-        //if (value < target)  L = M;  else  R = M;
-        //M = (R - L) / 2;
-        M = value < target ? (R - M) / 2 : (M - L) / 2;
+        if (value < target)  L = M;  else  R = M;
+        M = (R - L) / 2;
     } while (M);
     return R;
 }
