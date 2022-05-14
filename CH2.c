@@ -51,10 +51,10 @@ void __attribute__ ((noinline))
       max2 = c>d? c: d;
       min2 = c>d? d: c;
 
-      a    = min1>min2? min2: min1;
+      //a    = min1>min2? min2: min1;
       b    = min1>min2? min1: min2;
       c    = max1>max2? max2: max1;
-      d    = max1>max2? max1: max2;
+      //d    = max1>max2? max1: max2;
 
       v = (b+c) % MAX_VAL;
       OUT[x+D*y] = v;
