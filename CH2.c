@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
 
 // Variable used to generate pseudo-random numbers
 unsigned int seed;
@@ -9,6 +10,7 @@ unsigned int myRandom() {
     seed = (214013 * seed + 2531011);
     return (seed >> 13);
 }
+
 
 void GenerateBOARD(unsigned short BOARD[], int DIM, unsigned short MAX_VAL)
 {
@@ -23,32 +25,51 @@ void GenerateBOARD(unsigned short BOARD[], int DIM, unsigned short MAX_VAL)
         BOARD[idx] = myRandom() % MAX_VAL;
 }
 
+typedef struct data_thread{
+    int lower;
+    int upper;
+    int aux;
+} data_t;
+
+void CopyBOARDrows(unsigned short IN[], unsigned short OUT[], data_t t) {
+    for (int i = t.lower; i < t.upper; i++)
+        OUT[i] = IN[i];
+}
 
 void CopyBOARD(unsigned short IN[], unsigned short OUT[], int D)
 {
-    for (int y = 1; y < D - 1; y++) {
-        int aux = D * y;
-        for (int x = 1; x < D - 1; x++)
-            OUT[x + aux] = IN[x + aux];
+    int clusters = 8;
+    h = pthread_t[clusters];
+    int inc = (int)((D - 2) / clusters);
+    for (int i = 0; i < clusters - 1; i++) {
+        data_t = { .lower =1 + i * inc, .upper = 1 + (i + 1) * inc, .aux = 0 };
+        pthread_create(&h[i], NULL, &CopyBOARDrows, &data_t);
     }
+    data_tt = { .lower = 1 + (clusters - 1) * inc, .upper = (D * D) - 1, .aux = 0 };
+    pthread_create(&h[i], NULL, &CopyBOARDrows, &data_tT);
 }
 
+
+
+void CopyBOARD(unsigned short IN[], unsigned short OUT[], int D)
+{
+    for (int y = 1; y < D - 1; y++)
+        for (int x = 1; x < D - 1; x++)
+            OUT[x + D * y] = IN[x + D * y];
+}
 
 void __attribute__((noinline))
 UpdateBOARD(unsigned short IN[], unsigned short OUT[], int D, unsigned short MAX_VAL)
 {
     unsigned short max1, max2, min1, min2, a, b, c, d, v;
-    for (int y = 1; y < D - 1; y++) {
-        int aux1 = D * y;
-        int aux2 = D * (y - 1);
-        int aux3 = D * (y + 1);
+    for (int y = 1; y < D - 1; y++)
         for (int x = 1; x < D - 1; x++) // access consecutive elements in inner loop
         {
             // copy values of neighbour elements
-            a = IN[x + 1 + aux1];
-            b = IN[x - 1 + aux1];
-            c = IN[x + aux2];
-            d = IN[x + aux3];
+            a = IN[x + 1 + D * y];
+            b = IN[x - 1 + D * y];
+            c = IN[x + D * (y - 1)];
+            d = IN[x + D * (y + 1)];
 
             // Sort using Sorting Network
             max1 = a > b ? a : b;
@@ -64,9 +85,8 @@ UpdateBOARD(unsigned short IN[], unsigned short OUT[], int D, unsigned short MAX
             //v = (b + c) % MAX_VAL;
             v = b + c;
             v = v >= MAX_VAL ? v - MAX_VAL : v;
-            OUT[x + aux1] = v;
+            OUT[x + D * y] = v;
         }
-    }
 }
 
 
@@ -173,12 +193,11 @@ unsigned BinSearch(unsigned Vector[], int N, unsigned target)
 void __attribute__((noinline))
 UpdateReversed(unsigned short BOARD[], unsigned Freq[], unsigned LocalId[], int D, int ValMax)
 {
-    int DD = D * D;
-    for (int xy = 0; xy < DD; xy++)
+    for (int xy = 0; xy < D * D; xy++)
     {
         unsigned short V = BOARD[xy];
         unsigned pos = Freq[V] + LocalId[xy];
-        BOARD[xy] = BinSearch(Freq, ValMax, DD - pos) - 1;
+        BOARD[xy] = BinSearch(Freq, ValMax, D * D - pos) - 1;
     }
 }
 
