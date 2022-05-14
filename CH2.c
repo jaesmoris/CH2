@@ -42,11 +42,11 @@ void CopyBOARD(unsigned short IN[], unsigned short OUT[], int D)
     pthread_t h[clusters];
     int inc = (int)((D - 2) / clusters);
     for (int i = 0; i < clusters - 1; i++) {
-        data_t = { .lower =1 + i * inc, .upper = 1 + (i + 1) * inc, .aux = 0 };
-        pthread_create(&h[i], NULL, &CopyBOARDrows, &data_t);
+        data_t  asdf = { .lower =1 + i * inc, .upper = 1 + (i + 1) * inc, .aux = 0 };
+        pthread_create(&h[i], NULL, &CopyBOARDrows, &asdf);
     }
-    data_tt = { .lower = 1 + (clusters - 1) * inc, .upper = (D * D) - 1, .aux = 0 };
-    pthread_create(&h[i], NULL, &CopyBOARDrows, &data_tT);
+    data_tt asdf2 = { .lower = 1 + (clusters - 1) * inc, .upper = (D * D) - 1, .aux = 0 };
+    pthread_create(&h[i], NULL, &CopyBOARDrows, &asdf2);
 }
 
 
