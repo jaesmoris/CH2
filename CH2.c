@@ -45,7 +45,7 @@ void CopyBOARD(unsigned short IN[], unsigned short OUT[], int D)
         data_t  asdf = { .lower =1 + i * inc, .upper = 1 + (i + 1) * inc, .aux = 0 };
         pthread_create(&h[i], NULL, &CopyBOARDrows, &asdf);
     }
-    data_tt asdf2 = { .lower = 1 + (clusters - 1) * inc, .upper = (D * D) - 1, .aux = 0 };
+    data_t asdf2 = { .lower = 1 + (clusters - 1) * inc, .upper = (D * D) - 1, .aux = 0 };
     pthread_create(&h[i], NULL, &CopyBOARDrows, &asdf2);
 }
 
