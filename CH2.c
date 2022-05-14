@@ -167,11 +167,12 @@ unsigned BinSearch(unsigned Vector[], int N, unsigned target)
 void __attribute__((noinline))
 UpdateReversed(unsigned short BOARD[], unsigned Freq[], unsigned LocalId[], int D, int ValMax)
 {
-    for (int xy = 0; xy < D * D; xy++)
+    int DD = D * D;
+    for (int xy = 0; xy < DD; xy++)
     {
         unsigned short V = BOARD[xy];
         unsigned pos = Freq[V] + LocalId[xy];
-        BOARD[xy] = BinSearch(Freq, ValMax, D * D - pos) - 1;
+        BOARD[xy] = BinSearch(Freq, ValMax, DD - pos) - 1;
     }
 }
 
