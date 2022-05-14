@@ -55,10 +55,10 @@ UpdateBOARD(unsigned short IN[], unsigned short OUT[], int D, unsigned short MAX
             b = min1 > min2 ? min1 : min2;
             c = max1 > max2 ? max2 : max1;
             //d = max1 > max2 ? max1 : max2;
-
-            //v = (b + c) % MAX_VAL;
-            v = b + c;
-            v = v > MAX_VAL ? v - MAX_VAL : v;
+            printf("%d", b + c);
+            v = (b + c) % MAX_VAL;
+            //v = b + c;
+            //v = v > MAX_VAL ? v - MAX_VAL : v;
             OUT[x + D * y] = v;
         }
 }
