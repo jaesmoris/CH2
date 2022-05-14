@@ -152,12 +152,14 @@ void PrintPrefix(unsigned Freq[], int ValMax)
 unsigned BinSearch(unsigned Vector[], int N, unsigned target)
 {
     unsigned M, L = 0, R = N;
-    M = (R - L) / 2;
+    M = R / 2;
+    //M = (R - L) / 2;
     do {
         M = M + L;
         unsigned value = Vector[M];
-        if (value < target)  L = M;  else  R = M;
-        M = (R - L) / 2;
+        //if (value < target)  L = M;  else  R = M;
+        //M = (R - L) / 2;
+        M = value < target ? (R - M) / 2 : (M - L) / 2;
     } while (M);
     return R;
 }
