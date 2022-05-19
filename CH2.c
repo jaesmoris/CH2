@@ -26,7 +26,6 @@ void GenerateBOARD(unsigned short BOARD[], int DIM, unsigned short MAX_VAL)
 }
 /*
 
-*/
 typedef struct data_thread{
     int lower;
     int upper;
@@ -50,6 +49,7 @@ void CopyBOARD(unsigned short IN[], unsigned short OUT[], int D)
     data_t asdf2 = { .lower = 1 + (clusters - 1) * inc, .upper = (D * D) - 1, .aux = 0 };
     pthread_create(&h[i], NULL, &CopyBOARDrows, &asdf2);
 }
+*/
 
 
 void CopyBOARD(unsigned short IN[], unsigned short OUT[], int D)
