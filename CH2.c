@@ -26,6 +26,7 @@ void GenerateBOARD(unsigned short BOARD[], int DIM, unsigned short MAX_VAL)
 }
 /*
 
+*/
 typedef struct data_thread{
     int lower;
     int upper;
@@ -39,7 +40,7 @@ void CopyBOARDrows(unsigned short IN[], unsigned short OUT[], data_t t) {
 
 void CopyBOARD(unsigned short IN[], unsigned short OUT[], int D)
 {
-    int clusters = 8;
+    int clusters = 4; // asumimos que D - 2 es divisible por 4
     pthread_t h[clusters];
     int inc = (int)((D - 2) / clusters);
     for (int i = 0; i < clusters - 1; i++) {
@@ -51,7 +52,6 @@ void CopyBOARD(unsigned short IN[], unsigned short OUT[], int D)
 }
 
 
-*/
 void CopyBOARD(unsigned short IN[], unsigned short OUT[], int D)
 {
     for (int y = 1; y < D - 1; y++)
